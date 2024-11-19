@@ -23,7 +23,7 @@ def _get_as_snowflake(data, key):
     try:
         value = data[key]
     except (KeyError, TypeError):
-        return {}
+        return None
     else:
         return value and int(value)
 
@@ -109,10 +109,6 @@ def send_message(
             key: str(value) for key, value in message_reference.items()
         }
     return self.request(r, json=payload)
-
-
-def create_message(self, *, channel, data):
-    return discord.Message(state=self, channel=channel, data=data)
 
 
 def _Overwrites_init(self, **kwargs):
@@ -229,7 +225,6 @@ discord.state.ConnectionState._get_guild = _get_guild
 discord.state.ConnectionState.parse_typing_start = parse_typing_start
 discord.utils.parse_time = parse_time
 commands.HelpCommand.clean_prefix = clean_prefix
-discord.state.ConnectionState.create_message = create_message
 discord.http.HTTPClient.send_message = send_message
 discord.state.ConnectionState.parse_message_create = parse_message_create
 discord.http.HTTPClient.get_gateway = get_gateway
